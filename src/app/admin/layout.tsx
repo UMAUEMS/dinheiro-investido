@@ -1,0 +1,41 @@
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
+import { AdminSidebar } from "@/components/admin/Sidebar";
+import { AdminHeader } from "@/components/admin/Header";
+
+export default async function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/auth/login?redirect=/admin");
+  }
+
+  // Verificar se o usuário é admin ou moderador
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("id, email, full_name, avatar_url, role")
+    .eq("id", user.id)
+    .single();
+
+  if (!profile || !["admin", "moderator"].includes(profile.role || "")) {
+    redirect("/dashboard");
+  }
+
+  return (
+    <div className="min-h-screen bg-[#f8f9fa]">
+      <AdminSidebar profile={profile} />
+      <div className="lg:pl-64">
+        <AdminHeader profile={profile} />
+        <main className="p-6">{children}</main>
+      </div>
+    </div>
+  );
+}
