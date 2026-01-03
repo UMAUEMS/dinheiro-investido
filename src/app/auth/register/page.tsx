@@ -1,216 +1,153 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import Link from "next/link";
-import { Mail, Lock, User, ArrowRight, Github, Loader2, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { register, loginWithGoogle, loginWithGitHub } from "../actions";
+import { Mail, Lock, User, ArrowRight, Loader2, Sparkles, Check } from "lucide-react";
+import { signup } from "../actions";
 
-export default function RegisterPage() {
+function RegisterForm() {
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [socialLoading, setSocialLoading] = useState<string | null>(null);
 
-  async function handleSubmit(formData: FormData) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     setIsLoading(true);
     setError(null);
 
-    // Validação de senha
+    const formData = new FormData(e.currentTarget);
+    
+    // Verificar se as senhas coincidem
     const password = formData.get("password") as string;
     const confirmPassword = formData.get("confirmPassword") as string;
-
+    
     if (password !== confirmPassword) {
       setError("As senhas não coincidem");
       setIsLoading(false);
       return;
     }
 
-    if (password.length < 6) {
-      setError("A senha deve ter pelo menos 6 caracteres");
-      setIsLoading(false);
-      return;
-    }
-
-    const result = await register(formData);
+    const result = await signup(formData);
 
     if (result?.error) {
       setError(result.error);
       setIsLoading(false);
+    } else {
+      setSuccess(true);
+      setIsLoading(false);
     }
   }
 
-  async function handleGoogleLogin() {
-    setSocialLoading("google");
-    const result = await loginWithGoogle();
-    if (result?.error) {
-      setError(result.error);
-      setSocialLoading(null);
-    }
-  }
-
-  async function handleGithubLogin() {
-    setSocialLoading("github");
-    const result = await loginWithGitHub();
-    if (result?.error) {
-      setError(result.error);
-      setSocialLoading(null);
-    }
+  if (success) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0a0a1a] via-[#1a1a3a] to-[#0a0a1a] px-4 py-12">
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-green-500/20 rounded-full blur-3xl animate-pulse"></div>
+        </div>
+        
+        <div className="relative z-10 w-full max-w-md">
+          <div className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 p-8 shadow-2xl text-center">
+            <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-6">
+              <Check className="w-8 h-8 text-green-400" />
+            </div>
+            <h1 className="text-2xl font-bold text-white mb-4">
+              Conta criada com sucesso!
+            </h1>
+            <p className="text-gray-400 mb-6">
+              Enviamos um email de confirmação para você. Por favor, verifique sua caixa de entrada e clique no link para ativar sua conta.
+            </p>
+            <Link
+              href="/auth/login"
+              className="inline-flex items-center gap-2 py-3 px-6 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:from-purple-500 hover:to-pink-500 transition-all"
+            >
+              Ir para o Login
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="max-w-md mx-auto">
-      <Card className="bg-white border-none shadow-2xl">
-        <CardHeader className="text-center pb-0">
-          <CardTitle className="text-2xl text-[#171A3D]">
-            Crie sua conta grátis
-          </CardTitle>
-          <p className="text-[#736F89] mt-2">
-            Comece a criar publicações incríveis hoje
-          </p>
-        </CardHeader>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0a0a1a] via-[#1a1a3a] to-[#0a0a1a] px-4 py-12">
+      {/* Background Effects */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      </div>
 
-        <CardContent className="pt-6">
-          {/* Benefícios */}
-          <div className="mb-6 p-4 bg-[#E5E5E6]/30 rounded-lg">
-            <p className="text-sm font-medium text-[#171A3D] mb-2">
-              Incluído no plano grátis:
+      <div className="relative z-10 w-full max-w-md">
+        {/* Logo */}
+        <div className="text-center mb-8">
+          <Link href="/" className="inline-flex items-center gap-2">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+              <Sparkles className="w-6 h-6 text-white" />
+            </div>
+            <span className="text-2xl font-bold text-white">Dinheiro Investido</span>
+          </Link>
+        </div>
+
+        {/* Card */}
+        <div className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 p-8 shadow-2xl">
+          <div className="text-center mb-6">
+            <h1 className="text-2xl font-bold text-white mb-2">
+              Crie sua conta grátis
+            </h1>
+            <p className="text-gray-400">
+              Comece a criar flipbooks incríveis hoje
             </p>
-            <ul className="space-y-1">
-              <li className="flex items-center gap-2 text-sm text-[#736F89]">
-                <Check className="w-4 h-4 text-green-500" />
-                3 publicações gratuitas
-              </li>
-              <li className="flex items-center gap-2 text-sm text-[#736F89]">
-                <Check className="w-4 h-4 text-green-500" />
-                Visualizações ilimitadas
-              </li>
-              <li className="flex items-center gap-2 text-sm text-[#736F89]">
-                <Check className="w-4 h-4 text-green-500" />
-                Modelos básicos inclusos
-              </li>
-            </ul>
           </div>
 
           {/* Mensagem de erro */}
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
+            <div className="mb-6 p-4 bg-red-500/20 border border-red-500/50 rounded-xl text-red-300 text-sm">
               {error}
             </div>
           )}
 
-          {/* Registro Social */}
-          <div className="space-y-3 mb-6">
-            <Button
-              type="button"
-              variant="secondary"
-              className="w-full justify-center gap-3"
-              onClick={handleGoogleLogin}
-              disabled={socialLoading !== null}
-            >
-              {socialLoading === "google" ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                <svg className="w-5 h-5" viewBox="0 0 24 24">
-                  <path
-                    fill="currentColor"
-                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                  />
-                  <path
-                    fill="currentColor"
-                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                  />
-                  <path
-                    fill="currentColor"
-                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                  />
-                  <path
-                    fill="currentColor"
-                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                  />
-                </svg>
-              )}
-              Registrar com Google
-            </Button>
-            <Button
-              type="button"
-              variant="secondary"
-              className="w-full justify-center gap-3"
-              onClick={handleGithubLogin}
-              disabled={socialLoading !== null}
-            >
-              {socialLoading === "github" ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                <Github className="w-5 h-5" />
-              )}
-              Registrar com GitHub
-            </Button>
-          </div>
-
-          {/* Divisor */}
-          <div className="relative my-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-[#E5E5E6]" />
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-white text-[#736F89]">
-                ou registre com email
-              </span>
-            </div>
-          </div>
-
           {/* Formulário de Registro */}
-          <form action={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label
-                htmlFor="fullName"
-                className="block text-sm font-medium text-[#171A3D] mb-1"
-              >
+              <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
                 Nome completo
               </label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#736F89]" />
+                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                 <input
                   type="text"
-                  id="fullName"
-                  name="fullName"
+                  id="name"
+                  name="name"
                   placeholder="Seu nome"
                   required
-                  className="w-full pl-10 pr-4 py-3 rounded-lg border border-[#E5E5E6] focus:outline-none focus:ring-2 focus:ring-[#263A68] focus:border-transparent"
+                  className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                 />
               </div>
             </div>
 
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-[#171A3D] mb-1"
-              >
+              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                 Email
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#736F89]" />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                 <input
                   type="email"
                   id="email"
                   name="email"
                   placeholder="seu@email.com"
                   required
-                  className="w-full pl-10 pr-4 py-3 rounded-lg border border-[#E5E5E6] focus:outline-none focus:ring-2 focus:ring-[#263A68] focus:border-transparent"
+                  className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                 />
               </div>
             </div>
 
             <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-[#171A3D] mb-1"
-              >
+              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
                 Senha
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#736F89]" />
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                 <input
                   type="password"
                   id="password"
@@ -218,77 +155,103 @@ export default function RegisterPage() {
                   placeholder="Mínimo 6 caracteres"
                   required
                   minLength={6}
-                  className="w-full pl-10 pr-4 py-3 rounded-lg border border-[#E5E5E6] focus:outline-none focus:ring-2 focus:ring-[#263A68] focus:border-transparent"
+                  className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                 />
               </div>
             </div>
 
             <div>
-              <label
-                htmlFor="confirmPassword"
-                className="block text-sm font-medium text-[#171A3D] mb-1"
-              >
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 mb-2">
                 Confirmar senha
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#736F89]" />
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                 <input
                   type="password"
                   id="confirmPassword"
                   name="confirmPassword"
-                  placeholder="Repita a senha"
+                  placeholder="Digite a senha novamente"
                   required
                   minLength={6}
-                  className="w-full pl-10 pr-4 py-3 rounded-lg border border-[#E5E5E6] focus:outline-none focus:ring-2 focus:ring-[#263A68] focus:border-transparent"
+                  className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                 />
               </div>
             </div>
 
-            <div className="flex items-start gap-2">
+            <div className="flex items-start gap-3">
               <input
                 type="checkbox"
                 id="terms"
                 name="terms"
                 required
-                className="w-4 h-4 mt-1 rounded border-[#E5E5E6] text-[#263A68] focus:ring-[#263A68]"
+                className="w-5 h-5 mt-0.5 rounded bg-white/5 border-white/20 text-purple-500 focus:ring-purple-500"
               />
-              <label htmlFor="terms" className="text-sm text-[#736F89]">
-                Li e concordo com os{" "}
-                <Link href="/termos" className="text-[#263A68] hover:underline">
+              <label htmlFor="terms" className="text-sm text-gray-400">
+                Eu concordo com os{" "}
+                <Link href="/termos" className="text-purple-400 hover:text-purple-300">
                   Termos de Uso
                 </Link>{" "}
                 e{" "}
-                <Link href="/privacidade" className="text-[#263A68] hover:underline">
+                <Link href="/privacidade" className="text-purple-400 hover:text-purple-300">
                   Política de Privacidade
                 </Link>
               </label>
             </div>
 
-            <Button
+            <button
               type="submit"
-              className="w-full"
               disabled={isLoading}
+              className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:from-purple-500 hover:to-pink-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
             >
               {isLoading ? (
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              ) : null}
-              Criar conta grátis
-              {!isLoading && <ArrowRight className="w-4 h-4 ml-2" />}
-            </Button>
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  Criando conta...
+                </>
+              ) : (
+                <>
+                  Criar conta grátis
+                  <ArrowRight className="w-5 h-5" />
+                </>
+              )}
+            </button>
           </form>
 
           {/* Link para login */}
-          <p className="text-center text-sm text-[#736F89] mt-6">
+          <p className="text-center text-gray-400 mt-6">
             Já tem uma conta?{" "}
-            <Link
-              href="/auth/login"
-              className="text-[#263A68] font-medium hover:underline"
-            >
+            <Link href="/auth/login" className="text-purple-400 font-medium hover:text-purple-300 transition-colors">
               Fazer login
             </Link>
           </p>
-        </CardContent>
-      </Card>
+        </div>
+
+        {/* Link para voltar */}
+        <div className="text-center mt-6">
+          <Link href="/" className="text-gray-500 hover:text-gray-400 text-sm transition-colors">
+            ← Voltar para o início
+          </Link>
+        </div>
+      </div>
     </div>
+  );
+}
+
+function LoadingState() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0a0a1a] via-[#1a1a3a] to-[#0a0a1a]">
+      <div className="text-center">
+        <Loader2 className="w-12 h-12 animate-spin text-purple-500 mx-auto" />
+        <p className="text-gray-400 mt-4">Carregando...</p>
+      </div>
+    </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<LoadingState />}>
+      <RegisterForm />
+    </Suspense>
   );
 }
