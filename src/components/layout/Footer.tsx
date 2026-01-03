@@ -1,68 +1,84 @@
 import Link from "next/link";
-import { Facebook, Instagram, Youtube, Mail, Heart, Sparkles } from "lucide-react";
+import { Facebook, Instagram, Youtube, Mail, Heart, Sparkles, ArrowRight } from "lucide-react";
 import { siteConfig, footerLinks } from "@/lib/constants";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative border-t border-white/5" role="contentinfo">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50" />
+    <footer className="relative border-t border-white/5 bg-[#030014]" role="contentinfo">
+      {/* Background gradient */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[128px]" />
+        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-pink-600/10 rounded-full blur-[128px]" />
+      </div>
       
       <div className="container relative z-10 mx-auto px-6 py-16">
-        {/* Main Footer */}
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-12">
+        {/* Newsletter Section */}
+        <div className="relative mb-16">
+          <div className="absolute -inset-2 bg-gradient-to-r from-violet-600/20 via-purple-600/20 to-pink-600/20 rounded-3xl blur-xl" />
+          <div className="relative bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-2xl p-8 md:p-10">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+              <div>
+                <h3 className="text-2xl font-bold text-white mb-2">Receba novidades exclusivas</h3>
+                <p className="text-white/50">Dicas, tutoriais e ofertas especiais direto no seu email.</p>
+              </div>
+              <form className="flex gap-3 w-full md:w-auto">
+                <input
+                  type="email"
+                  placeholder="seu@email.com"
+                  className="flex-1 md:w-64 px-5 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-purple-500/50 focus:bg-white/[0.07] transition-all"
+                />
+                <button 
+                  type="submit" 
+                  className="group inline-flex items-center gap-2 px-6 py-3.5 font-semibold text-white bg-gradient-to-r from-violet-600 to-purple-600 rounded-xl hover:shadow-[0_0_30px_rgba(139,92,246,0.4)] transition-all"
+                >
+                  <span>Inscrever</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Footer Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-8 md:gap-12 mb-12">
           {/* Brand */}
           <div className="col-span-2">
-            <Link href="/" className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#667eea] to-[#764ba2] flex items-center justify-center">
-                <Sparkles className="w-6 h-6 text-white" />
+            <Link href="/" className="flex items-center gap-3 mb-6 group">
+              <div className="relative">
+                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-violet-600 to-purple-600 flex items-center justify-center transition-transform group-hover:scale-110">
+                  <Sparkles className="w-5 h-5 text-white" />
+                </div>
+                <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 to-purple-600 rounded-xl blur opacity-30 group-hover:opacity-50 transition-opacity" />
               </div>
               <div className="flex flex-col">
-                <span className="text-xl font-bold gradient-text">Dinheiro</span>
-                <span className="text-sm text-white/60 -mt-1">Investido</span>
+                <span className="text-lg font-bold text-white">Dinheiro</span>
+                <span className="text-xs text-white/50 -mt-1">Investido</span>
               </div>
             </Link>
-            <p className="text-white/60 mb-6 max-w-xs">
+            <p className="text-white/50 text-sm mb-6 max-w-xs leading-relaxed">
               Transforme seus PDFs em flipbooks interativos e vídeos cinematográficos. A plataforma completa para criadores digitais.
             </p>
             {/* Social Links */}
-            <div className="flex gap-3">
-              <a
-                href={siteConfig.links.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all"
-                aria-label="Instagram"
-              >
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a
-                href={siteConfig.links.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all"
-                aria-label="Facebook"
-              >
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all"
-                aria-label="YouTube"
-              >
-                <Youtube className="w-5 h-5" />
-              </a>
-              <a
-                href="mailto:contato@dinheiroinvestidoweb.com.br"
-                className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all"
-                aria-label="Email"
-              >
-                <Mail className="w-5 h-5" />
-              </a>
+            <div className="flex gap-2">
+              {[
+                { icon: Instagram, href: siteConfig.links.instagram, label: "Instagram" },
+                { icon: Facebook, href: siteConfig.links.facebook, label: "Facebook" },
+                { icon: Youtube, href: "https://youtube.com", label: "YouTube" },
+                { icon: Mail, href: "mailto:contato@dinheiroinvestidoweb.com.br", label: "Email" },
+              ].map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target={social.href.startsWith('mailto') ? undefined : "_blank"}
+                  rel={social.href.startsWith('mailto') ? undefined : "noopener noreferrer"}
+                  className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all"
+                  aria-label={social.label}
+                >
+                  <social.icon className="w-4 h-4" />
+                </a>
+              ))}
             </div>
           </div>
 
@@ -72,7 +88,7 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.produto.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-white/60 hover:text-white transition-colors text-sm">
+                  <Link href={link.href} className="text-white/40 hover:text-white transition-colors text-sm">
                     {link.label}
                   </Link>
                 </li>
@@ -86,7 +102,7 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.categorias.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-white/60 hover:text-white transition-colors text-sm">
+                  <Link href={link.href} className="text-white/40 hover:text-white transition-colors text-sm">
                     {link.label}
                   </Link>
                 </li>
@@ -100,7 +116,7 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.empresa.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-white/60 hover:text-white transition-colors text-sm">
+                  <Link href={link.href} className="text-white/40 hover:text-white transition-colors text-sm">
                     {link.label}
                   </Link>
                 </li>
@@ -114,7 +130,7 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-white/60 hover:text-white transition-colors text-sm">
+                  <Link href={link.href} className="text-white/40 hover:text-white transition-colors text-sm">
                     {link.label}
                   </Link>
                 </li>
@@ -123,33 +139,13 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Newsletter */}
-        <div className="glass-card p-6 md:p-8 mb-12">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            <div>
-              <h3 className="text-xl font-bold text-white mb-2">Receba novidades e dicas exclusivas</h3>
-              <p className="text-white/60">Cadastre-se para receber conteúdos gratuitos e ofertas especiais.</p>
-            </div>
-            <form className="flex gap-3 w-full md:w-auto">
-              <input
-                type="email"
-                placeholder="Seu melhor e-mail"
-                className="flex-1 md:w-64 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/40 focus:outline-none focus:border-purple-500 transition-colors"
-              />
-              <button type="submit" className="btn-gradient px-6 py-3 whitespace-nowrap">
-                Inscrever
-              </button>
-            </form>
-          </div>
-        </div>
-
         {/* Bottom */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-8 border-t border-white/5">
-          <p className="text-white/40 text-sm">
+          <p className="text-white/30 text-sm">
             © {currentYear} {siteConfig.name}. Todos os direitos reservados.
           </p>
-          <p className="text-white/40 text-sm flex items-center gap-1">
-            Feito com <Heart className="w-4 h-4 text-red-500 fill-red-500" /> no Brasil
+          <p className="text-white/30 text-sm flex items-center gap-1.5">
+            Feito com <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500" /> no Brasil
           </p>
         </div>
       </div>
