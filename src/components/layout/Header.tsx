@@ -2,8 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Menu, X, Sparkles } from "lucide-react";
 import { navLinks, siteConfig } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -13,7 +12,7 @@ export function Header() {
 
   React.useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -22,43 +21,42 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
         isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-md"
-          : "bg-transparent"
+          ? "header-glass py-3"
+          : "bg-transparent py-5"
       )}
       role="banner"
     >
       {/* Skip Link para Acessibilidade */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-[#171A3D] focus:text-white focus:px-4 focus:py-2 focus:rounded-lg"
+        className="skip-link"
       >
         Pular para o conteúdo principal
       </a>
 
       <nav
-        className="container mx-auto px-4 py-4 flex items-center justify-between"
+        className="container mx-auto px-6 flex items-center justify-between"
         role="navigation"
         aria-label="Navegação principal"
       >
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center gap-2 text-xl font-bold"
+          className="flex items-center gap-3 group"
           aria-label={`${siteConfig.name} - Página inicial`}
         >
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#171A3D] via-[#263A68] to-[#342852] flex items-center justify-center">
-            <span className="text-white font-bold text-lg">DI</span>
+          <div className="relative">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#667eea] to-[#764ba2] flex items-center justify-center transition-all duration-300 group-hover:scale-110">
+              <Sparkles className="w-6 h-6 text-white" />
+            </div>
+            <div className="absolute -inset-1 bg-gradient-to-r from-[#667eea] to-[#764ba2] rounded-2xl blur opacity-30 group-hover:opacity-60 transition-opacity" />
           </div>
-          <span
-            className={cn(
-              "hidden sm:block transition-colors",
-              isScrolled ? "text-[#171A3D]" : "text-white"
-            )}
-          >
-            {siteConfig.name}
-          </span>
+          <div className="flex flex-col">
+            <span className="text-xl font-bold gradient-text">Dinheiro</span>
+            <span className="text-sm text-white/60 -mt-1">Investido</span>
+          </div>
         </Link>
 
         {/* Desktop Navigation */}
@@ -67,12 +65,7 @@ export function Header() {
             <li key={link.href} role="none">
               <Link
                 href={link.href}
-                className={cn(
-                  "px-4 py-2 rounded-lg font-medium transition-colors",
-                  isScrolled
-                    ? "text-[#171A3D] hover:bg-[#E5E5E6]"
-                    : "text-white/90 hover:text-white hover:bg-white/10"
-                )}
+                className="px-5 py-2.5 text-white/70 hover:text-white font-medium rounded-xl hover:bg-white/5 transition-all duration-300"
                 role="menuitem"
               >
                 {link.label}
@@ -82,35 +75,31 @@ export function Header() {
         </ul>
 
         {/* CTA Buttons */}
-        <div className="hidden lg:flex items-center gap-3">
-          <Button
-            variant={isScrolled ? "ghost" : "outline"}
-            asChild
-            className={cn(
-              !isScrolled && "border-white/50 text-white hover:bg-white/10 hover:text-white"
-            )}
+        <div className="hidden lg:flex items-center gap-4">
+          <Link
+            href="/auth/login"
+            className="btn-glass text-sm px-6 py-3"
           >
-            <Link href="/auth">Entrar</Link>
-          </Button>
-          <Button asChild>
-            <Link href="/auth">Começar Grátis</Link>
-          </Button>
+            Entrar
+          </Link>
+          <Link
+            href="/auth/register"
+            className="btn-gradient text-sm px-6 py-3"
+          >
+            <span>Começar Grátis</span>
+            <Sparkles className="w-4 h-4" />
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
         <button
-          className={cn(
-            "lg:hidden p-2 rounded-lg transition-colors",
-            isScrolled
-              ? "text-[#171A3D] hover:bg-[#E5E5E6]"
-              : "text-white hover:bg-white/10"
-          )}
+          className="lg:hidden p-3 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-expanded={isMenuOpen}
           aria-controls="mobile-menu"
           aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
         >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </nav>
 
@@ -118,40 +107,44 @@ export function Header() {
       <div
         id="mobile-menu"
         className={cn(
-          "lg:hidden absolute top-full left-0 right-0 bg-white shadow-lg transition-all duration-300 overflow-hidden",
-          isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+          "lg:hidden absolute top-full left-0 right-0 transition-all duration-500",
+          isMenuOpen 
+            ? "opacity-100 translate-y-0 pointer-events-auto" 
+            : "opacity-0 -translate-y-4 pointer-events-none"
         )}
         role="menu"
         aria-hidden={!isMenuOpen}
       >
-        <nav className="container mx-auto px-4 py-4">
-          <ul className="flex flex-col gap-2">
+        <div className="mx-4 mt-2 p-6 glass-card">
+          <nav className="flex flex-col gap-2" aria-label="Menu mobile">
             {navLinks.map((link) => (
-              <li key={link.href} role="none">
-                <Link
-                  href={link.href}
-                  className="block px-4 py-3 rounded-lg text-[#171A3D] font-medium hover:bg-[#E5E5E6] transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                  role="menuitem"
-                >
-                  {link.label}
-                </Link>
-              </li>
+              <Link
+                key={link.href}
+                href={link.href}
+                className="px-4 py-3 text-white/80 hover:text-white font-medium rounded-xl hover:bg-white/5 transition-all"
+                onClick={() => setIsMenuOpen(false)}
+                role="menuitem"
+              >
+                {link.label}
+              </Link>
             ))}
-          </ul>
-          <div className="flex flex-col gap-3 mt-4 pt-4 border-t border-[#E5E5E6]">
-            <Button variant="secondary" asChild className="w-full">
-              <Link href="/auth" onClick={() => setIsMenuOpen(false)}>
-                Entrar
-              </Link>
-            </Button>
-            <Button asChild className="w-full">
-              <Link href="/auth" onClick={() => setIsMenuOpen(false)}>
-                Começar Grátis
-              </Link>
-            </Button>
-          </div>
-        </nav>
+            <hr className="border-white/10 my-4" />
+            <Link
+              href="/auth/login"
+              className="btn-glass text-center"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Entrar
+            </Link>
+            <Link
+              href="/auth/register"
+              className="btn-gradient text-center"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <span>Começar Grátis</span>
+            </Link>
+          </nav>
+        </div>
       </div>
     </header>
   );

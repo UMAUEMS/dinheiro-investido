@@ -1,81 +1,78 @@
 import Link from "next/link";
-import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin } from "lucide-react";
+import { Facebook, Instagram, Youtube, Mail, Heart, Sparkles } from "lucide-react";
 import { siteConfig, footerLinks } from "@/lib/constants";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer
-      className="bg-gradient-to-br from-[#171A3D] via-[#263A68] to-[#342852] text-white"
-      role="contentinfo"
-    >
-      {/* Main Footer */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
-          {/* Brand Column */}
-          <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
-                <span className="text-white font-bold text-lg">DI</span>
+    <footer className="relative border-t border-white/5" role="contentinfo">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50" />
+      
+      <div className="container relative z-10 mx-auto px-6 py-16">
+        {/* Main Footer */}
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-12">
+          {/* Brand */}
+          <div className="col-span-2">
+            <Link href="/" className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#667eea] to-[#764ba2] flex items-center justify-center">
+                <Sparkles className="w-6 h-6 text-white" />
               </div>
-              <span className="text-xl font-bold">{siteConfig.name}</span>
+              <div className="flex flex-col">
+                <span className="text-xl font-bold gradient-text">Dinheiro</span>
+                <span className="text-sm text-white/60 -mt-1">Investido</span>
+              </div>
             </Link>
-            <p className="text-white/70 mb-6 max-w-md">
-              Transforme seus PDFs em publicações digitais interativas incríveis. 
-              Crie flipbooks, revistas, catálogos e muito mais com facilidade.
+            <p className="text-white/60 mb-6 max-w-xs">
+              Transforme seus PDFs em flipbooks interativos e vídeos cinematográficos. A plataforma completa para criadores digitais.
             </p>
             {/* Social Links */}
-            <div className="flex gap-4">
-              <a
-                href={siteConfig.links.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
-                aria-label="Facebook"
-              >
-                <Facebook size={20} />
-              </a>
+            <div className="flex gap-3">
               <a
                 href={siteConfig.links.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
+                className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all"
                 aria-label="Instagram"
               >
-                <Instagram size={20} />
+                <Instagram className="w-5 h-5" />
               </a>
               <a
-                href={siteConfig.links.twitter}
+                href={siteConfig.links.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
-                aria-label="Twitter"
+                className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all"
+                aria-label="Facebook"
               >
-                <Twitter size={20} />
+                <Facebook className="w-5 h-5" />
               </a>
               <a
                 href="https://youtube.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
+                className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all"
                 aria-label="YouTube"
               >
-                <Youtube size={20} />
+                <Youtube className="w-5 h-5" />
+              </a>
+              <a
+                href="mailto:contato@dinheiroinvestidoweb.com.br"
+                className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all"
+                aria-label="Email"
+              >
+                <Mail className="w-5 h-5" />
               </a>
             </div>
           </div>
 
           {/* Produto */}
           <div>
-            <h3 className="font-bold text-lg mb-4">Produto</h3>
+            <h3 className="text-sm font-semibold text-white mb-4">Produto</h3>
             <ul className="space-y-3">
               {footerLinks.produto.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-white/70 hover:text-white transition-colors"
-                  >
+                  <Link href={link.href} className="text-white/60 hover:text-white transition-colors text-sm">
                     {link.label}
                   </Link>
                 </li>
@@ -85,14 +82,11 @@ export function Footer() {
 
           {/* Categorias */}
           <div>
-            <h3 className="font-bold text-lg mb-4">Categorias</h3>
+            <h3 className="text-sm font-semibold text-white mb-4">Categorias</h3>
             <ul className="space-y-3">
               {footerLinks.categorias.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-white/70 hover:text-white transition-colors"
-                  >
+                  <Link href={link.href} className="text-white/60 hover:text-white transition-colors text-sm">
                     {link.label}
                   </Link>
                 </li>
@@ -100,29 +94,27 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Empresa & Legal */}
+          {/* Empresa */}
           <div>
-            <h3 className="font-bold text-lg mb-4">Empresa</h3>
-            <ul className="space-y-3 mb-6">
+            <h3 className="text-sm font-semibold text-white mb-4">Empresa</h3>
+            <ul className="space-y-3">
               {footerLinks.empresa.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-white/70 hover:text-white transition-colors"
-                  >
+                  <Link href={link.href} className="text-white/60 hover:text-white transition-colors text-sm">
                     {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
-            <h3 className="font-bold text-lg mb-4">Legal</h3>
+          </div>
+
+          {/* Legal */}
+          <div>
+            <h3 className="text-sm font-semibold text-white mb-4">Legal</h3>
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-white/70 hover:text-white transition-colors"
-                  >
+                  <Link href={link.href} className="text-white/60 hover:text-white transition-colors text-sm">
                     {link.label}
                   </Link>
                 </li>
@@ -131,42 +123,34 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Contact Info */}
-        <div className="mt-12 pt-8 border-t border-white/10">
-          <div className="flex flex-wrap gap-6 justify-center lg:justify-start">
-            <a
-              href="mailto:contato@dinheiroinvestidoweb.com.br"
-              className="flex items-center gap-2 text-white/70 hover:text-white transition-colors"
-            >
-              <Mail size={18} />
-              <span>contato@dinheiroinvestidoweb.com.br</span>
-            </a>
-            <a
-              href="tel:+5511999999999"
-              className="flex items-center gap-2 text-white/70 hover:text-white transition-colors"
-            >
-              <Phone size={18} />
-              <span>(11) 99999-9999</span>
-            </a>
-            <span className="flex items-center gap-2 text-white/70">
-              <MapPin size={18} />
-              <span>São Paulo, Brasil</span>
-            </span>
+        {/* Newsletter */}
+        <div className="glass-card p-6 md:p-8 mb-12">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div>
+              <h3 className="text-xl font-bold text-white mb-2">Receba novidades e dicas exclusivas</h3>
+              <p className="text-white/60">Cadastre-se para receber conteúdos gratuitos e ofertas especiais.</p>
+            </div>
+            <form className="flex gap-3 w-full md:w-auto">
+              <input
+                type="email"
+                placeholder="Seu melhor e-mail"
+                className="flex-1 md:w-64 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/40 focus:outline-none focus:border-purple-500 transition-colors"
+              />
+              <button type="submit" className="btn-gradient px-6 py-3 whitespace-nowrap">
+                Inscrever
+              </button>
+            </form>
           </div>
         </div>
-      </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-white/10">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-white/60 text-sm text-center md:text-left">
-              &copy; {currentYear} {siteConfig.name}. Todos os direitos reservados.
-            </p>
-            <p className="text-white/60 text-sm">
-              Feito com dedicação no Brasil
-            </p>
-          </div>
+        {/* Bottom */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-8 border-t border-white/5">
+          <p className="text-white/40 text-sm">
+            © {currentYear} {siteConfig.name}. Todos os direitos reservados.
+          </p>
+          <p className="text-white/40 text-sm flex items-center gap-1">
+            Feito com <Heart className="w-4 h-4 text-red-500 fill-red-500" /> no Brasil
+          </p>
         </div>
       </div>
     </footer>
