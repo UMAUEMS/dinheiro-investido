@@ -1,14 +1,28 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { useState, Suspense, useEffect } from "react";
 import Link from "next/link";
-import { Mail, Lock, User, ArrowRight, Loader2, Check, Sparkles, BookOpen, Video, ShoppingBag } from "lucide-react";
+import Image from "next/image";
+import { Mail, Lock, User, ArrowRight, Loader2, Check } from "lucide-react";
 import { signup } from "../actions";
 
 function RegisterForm() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Esconder Header e Footer nas páginas de auth
+  useEffect(() => {
+    const header = document.querySelector('header');
+    const footer = document.querySelector('footer');
+    if (header) header.style.display = 'none';
+    if (footer) footer.style.display = 'none';
+    
+    return () => {
+      if (header) header.style.display = '';
+      if (footer) footer.style.display = '';
+    };
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -39,7 +53,7 @@ function RegisterForm() {
 
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#fffbf8] p-8">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#fffbf8] p-8">
         <div className="text-center max-w-md">
           <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6">
             <Check className="w-8 h-8 text-green-600" />
@@ -55,43 +69,27 @@ function RegisterForm() {
   }
 
   return (
-    <div className="min-h-screen flex">
-      {/* Left - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#d4a5a5] via-[#c4868f] to-[#b76e79] relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-20 right-20 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
-        <div className="absolute bottom-40 left-20 w-48 h-48 bg-white/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/3 right-1/4 w-24 h-24 bg-white/5 rounded-full" />
-        
-        <div className="relative z-10 flex flex-col items-center justify-center w-full p-12 text-white">
-          <div className="mb-8">
-            <Sparkles className="w-16 h-16 text-white/80" />
-          </div>
-          <h1 className="text-4xl font-bold mb-4 text-center">Comece grátis!</h1>
-          <p className="text-white/80 text-center max-w-sm text-lg mb-12">
-            Crie flipbooks incríveis em minutos e encante seus clientes.
-          </p>
-          
-          {/* Features */}
-          <div className="space-y-4 w-full max-w-xs">
-            <div className="flex items-center gap-4 bg-white/10 rounded-xl p-4">
-              <BookOpen className="w-6 h-6" />
-              <span>Flipbooks ilimitados</span>
-            </div>
-            <div className="flex items-center gap-4 bg-white/10 rounded-xl p-4">
-              <Video className="w-6 h-6" />
-              <span>Exportação em vídeo</span>
-            </div>
-            <div className="flex items-center gap-4 bg-white/10 rounded-xl p-4">
-              <ShoppingBag className="w-6 h-6" />
-              <span>Loja de produtos</span>
-            </div>
+    <div className="fixed inset-0 z-50 flex bg-[#fffbf8]">
+      {/* Left - Image */}
+      <div className="hidden lg:block lg:w-1/2 relative">
+        <Image
+          src="/images/template-feminine.jpg"
+          alt="Templates"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#b76e79]/80 to-[#d4a5a5]/60" />
+        <div className="absolute inset-0 flex items-center justify-center p-12">
+          <div className="text-white text-center">
+            <h1 className="text-4xl font-bold mb-4">Comece grátis</h1>
+            <p className="text-white/80">Crie flipbooks incríveis em minutos</p>
           </div>
         </div>
       </div>
 
       {/* Right - Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-[#fffbf8]">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-[#fffbf8] overflow-y-auto">
         <div className="w-full max-w-md">
           <Link href="/" className="text-2xl font-bold text-[#4a3f3f] mb-8 block">
             Dinheiro<span className="text-[#b76e79]">.</span>
@@ -190,7 +188,7 @@ function RegisterForm() {
 
 export default function RegisterPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-[#fffbf8]"><Loader2 className="w-8 h-8 animate-spin text-[#b76e79]" /></div>}>
+    <Suspense fallback={<div className="fixed inset-0 z-50 flex items-center justify-center bg-[#fffbf8]"><Loader2 className="w-8 h-8 animate-spin text-[#b76e79]" /></div>}>
       <RegisterForm />
     </Suspense>
   );
