@@ -1,37 +1,43 @@
 @import "tailwindcss";
 
 :root {
-  /* Paleta Premium 2024 - Ultra Moderna */
-  --primary-start: #8b5cf6;
-  --primary-end: #a855f7;
-  --secondary-start: #ec4899;
-  --secondary-end: #f43f5e;
-  --accent-start: #06b6d4;
-  --accent-end: #3b82f6;
+  /* Paleta Rose Gold & Pastéis - Elegante e Feminina */
+  --rose-gold: #b76e79;
+  --rose-gold-light: #d4a5a5;
+  --rose-gold-dark: #8b5a5a;
   
-  /* Cores Base - Mais Profundo */
-  --background: #030014;
-  --background-secondary: #0a0a1a;
-  --background-card: rgba(255, 255, 255, 0.03);
-  --foreground: #ffffff;
-  --foreground-muted: #a1a1aa;
+  /* Tons Pastéis */
+  --pastel-pink: #fce4ec;
+  --pastel-rose: #f8bbd9;
+  --pastel-peach: #ffe5d9;
+  --pastel-cream: #fff8f0;
+  --pastel-lavender: #e8e0f0;
+  --pastel-blush: #fdf2f8;
   
-  /* Glassmorphism Premium */
-  --glass-bg: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  /* Cores Base - Tema Claro */
+  --background: #fffbf8;
+  --background-secondary: #fff5f0;
+  --background-card: rgba(255, 255, 255, 0.9);
+  --foreground: #4a3f3f;
+  --foreground-muted: #7a6b6b;
   
-  /* Gradientes */
-  --gradient-primary: linear-gradient(135deg, var(--primary-start), var(--primary-end));
-  --gradient-secondary: linear-gradient(135deg, var(--secondary-start), var(--secondary-end));
-  --gradient-accent: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+  /* Glassmorphism Claro */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(183, 110, 121, 0.2);
+  --glass-shadow: 0 8px 32px rgba(183, 110, 121, 0.1);
+  
+  /* Gradientes Rose Gold */
+  --gradient-primary: linear-gradient(135deg, #b76e79, #d4a5a5);
+  --gradient-secondary: linear-gradient(135deg, #f8bbd9, #fce4ec);
+  --gradient-accent: linear-gradient(135deg, #ffe5d9, #fdf2f8);
+  --gradient-rose: linear-gradient(135deg, #b76e79 0%, #d4a5a5 50%, #e8c4c4 100%);
 }
 
 @theme inline {
-  --color-primary: var(--primary-start);
-  --color-primary-light: var(--primary-end);
-  --color-accent: var(--secondary-start);
-  --color-accent-light: var(--secondary-end);
+  --color-primary: var(--rose-gold);
+  --color-primary-light: var(--rose-gold-light);
+  --color-accent: var(--pastel-pink);
+  --color-accent-light: var(--pastel-rose);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -57,7 +63,7 @@ body {
 }
 
 /* ============================================ */
-/* GLASSMORPHISM CARDS */
+/* GLASSMORPHISM CARDS - TEMA CLARO */
 /* ============================================ */
 .glass-card {
   background: var(--glass-bg);
@@ -70,14 +76,14 @@ body {
 }
 
 .glass-card:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(183, 110, 121, 0.3);
   transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(139, 92, 246, 0.2);
+  box-shadow: 0 20px 60px rgba(183, 110, 121, 0.15);
 }
 
 /* ============================================ */
-/* GRADIENT TEXT */
+/* GRADIENT TEXT - ROSE GOLD */
 /* ============================================ */
 .gradient-text {
   background: var(--gradient-primary);
@@ -87,21 +93,21 @@ body {
 }
 
 .gradient-text-secondary {
-  background: var(--gradient-secondary);
+  background: linear-gradient(135deg, #d4a5a5, #f8bbd9);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-text-accent {
-  background: var(--gradient-accent);
+  background: linear-gradient(135deg, #b76e79, #8b5a5a);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 /* ============================================ */
-/* BUTTONS */
+/* BUTTONS - ROSE GOLD */
 /* ============================================ */
 .btn-gradient {
   background: var(--gradient-primary);
@@ -128,7 +134,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--gradient-secondary);
+  background: linear-gradient(135deg, #8b5a5a, #b76e79);
   opacity: 0;
   transition: opacity 0.3s ease;
   border-radius: 16px;
@@ -136,7 +142,7 @@ body {
 
 .btn-gradient:hover {
   transform: translateY(-2px);
-  box-shadow: 0 20px 40px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 20px 40px rgba(183, 110, 121, 0.3);
   color: white;
 }
 
@@ -151,11 +157,11 @@ body {
 }
 
 .btn-glass {
-  background: var(--glass-bg);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  color: white;
+  border: 1px solid rgba(183, 110, 121, 0.2);
+  color: var(--rose-gold);
   font-weight: 600;
   padding: 16px 32px;
   border-radius: 16px;
@@ -169,29 +175,30 @@ body {
 }
 
 .btn-glass:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 1);
+  border-color: rgba(183, 110, 121, 0.4);
   transform: translateY(-2px);
-  color: white;
+  color: var(--rose-gold-dark);
+  box-shadow: 0 10px 30px rgba(183, 110, 121, 0.15);
 }
 
 /* ============================================ */
-/* GLOW EFFECTS */
+/* GLOW EFFECTS - ROSE GOLD */
 /* ============================================ */
 .glow {
-  box-shadow: 0 0 60px rgba(139, 92, 246, 0.5);
+  box-shadow: 0 0 60px rgba(183, 110, 121, 0.3);
 }
 
 .glow-pink {
-  box-shadow: 0 0 60px rgba(236, 72, 153, 0.5);
+  box-shadow: 0 0 60px rgba(248, 187, 217, 0.4);
 }
 
-.glow-cyan {
-  box-shadow: 0 0 60px rgba(6, 182, 212, 0.5);
+.glow-rose {
+  box-shadow: 0 0 60px rgba(183, 110, 121, 0.4);
 }
 
 /* ============================================ */
-/* ANIMATED BORDER */
+/* ANIMATED BORDER - ROSE GOLD */
 /* ============================================ */
 .animated-border {
   position: relative;
@@ -206,7 +213,7 @@ body {
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background: conic-gradient(from 0deg, var(--primary-start), var(--secondary-start), var(--accent-start), var(--primary-start));
+  background: conic-gradient(from 0deg, var(--rose-gold), var(--pastel-pink), var(--rose-gold-light), var(--rose-gold));
   border-radius: 26px;
   z-index: -1;
   animation: rotate 4s linear infinite;
@@ -234,8 +241,8 @@ body {
 }
 
 @keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
-  50% { box-shadow: 0 0 60px rgba(139, 92, 246, 0.6); }
+  0%, 100% { box-shadow: 0 0 20px rgba(183, 110, 121, 0.2); }
+  50% { box-shadow: 0 0 60px rgba(183, 110, 121, 0.4); }
 }
 
 @keyframes fadeInUp {
@@ -260,21 +267,21 @@ body {
 
 .shimmer {
   background: linear-gradient(90deg, 
-    rgba(255,255,255,0) 0%, 
-    rgba(255,255,255,0.1) 50%, 
-    rgba(255,255,255,0) 100%);
+    rgba(183,110,121,0) 0%, 
+    rgba(183,110,121,0.1) 50%, 
+    rgba(183,110,121,0) 100%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
 
 /* ============================================ */
-/* PRODUCT CARD */
+/* PRODUCT CARD - TEMA CLARO */
 /* ============================================ */
 .product-card {
-  background: var(--glass-bg);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
+  border: 1px solid rgba(183, 110, 121, 0.15);
   border-radius: 24px;
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -282,8 +289,8 @@ body {
 
 .product-card:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 30px 60px rgba(139, 92, 246, 0.25);
-  border-color: rgba(139, 92, 246, 0.4);
+  box-shadow: 0 30px 60px rgba(183, 110, 121, 0.2);
+  border-color: rgba(183, 110, 121, 0.3);
 }
 
 .product-card img {
@@ -295,13 +302,13 @@ body {
 }
 
 /* ============================================ */
-/* HEADER */
+/* HEADER - TEMA CLARO */
 /* ============================================ */
 .header-glass {
-  background: rgba(3, 0, 20, 0.8);
+  background: rgba(255, 251, 248, 0.9);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--glass-border);
+  border-bottom: 1px solid rgba(183, 110, 121, 0.1);
 }
 
 /* ============================================ */
@@ -312,6 +319,7 @@ body {
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.02em;
+  color: var(--foreground);
 }
 
 .hero-title {
@@ -319,6 +327,7 @@ body {
   font-weight: 900;
   line-height: 1;
   letter-spacing: -0.03em;
+  color: var(--foreground);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -334,14 +343,14 @@ a {
 }
 
 /* ============================================ */
-/* SCROLLBAR */
+/* SCROLLBAR - ROSE GOLD */
 /* ============================================ */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--background);
+  background: var(--pastel-cream);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -353,13 +362,13 @@ a {
 /* ACCESSIBILITY */
 /* ============================================ */
 *:focus-visible {
-  outline: 2px solid var(--primary-start);
+  outline: 2px solid var(--rose-gold);
   outline-offset: 4px;
 }
 
 ::selection {
-  background: rgba(139, 92, 246, 0.3);
-  color: white;
+  background: rgba(183, 110, 121, 0.2);
+  color: var(--foreground);
 }
 
 .skip-link {
@@ -470,15 +479,15 @@ a {
 }
 
 /* ============================================ */
-/* MESH GRADIENT BACKGROUND */
+/* MESH GRADIENT BACKGROUND - PASTEL */
 /* ============================================ */
 .mesh-gradient {
   background: 
-    radial-gradient(at 40% 20%, hsla(280,70%,50%,0.2) 0px, transparent 50%),
-    radial-gradient(at 80% 0%, hsla(220,70%,50%,0.15) 0px, transparent 50%),
-    radial-gradient(at 0% 50%, hsla(340,70%,50%,0.15) 0px, transparent 50%),
-    radial-gradient(at 80% 50%, hsla(200,70%,50%,0.1) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, hsla(260,70%,50%,0.15) 0px, transparent 50%);
+    radial-gradient(at 40% 20%, rgba(248,187,217,0.3) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(255,229,217,0.3) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, rgba(252,228,236,0.3) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, rgba(232,224,240,0.2) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(212,165,165,0.2) 0px, transparent 50%);
   background-color: var(--background);
 }
 
@@ -499,4 +508,28 @@ a {
 
 .backface-hidden {
   backface-visibility: hidden;
+}
+
+/* ============================================ */
+/* INPUT FIELDS - TEMA CLARO */
+/* ============================================ */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(183, 110, 121, 0.2);
+  color: var(--foreground);
+}
+
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="password"]::placeholder {
+  color: var(--foreground-muted);
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: var(--rose-gold);
+  box-shadow: 0 0 0 3px rgba(183, 110, 121, 0.1);
 }
