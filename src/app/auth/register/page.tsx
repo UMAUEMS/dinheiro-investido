@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Mail, Lock, User, ArrowRight, Github, Loader2, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { register, loginWithGoogle, loginWithGithub } from "../actions";
+import { register, loginWithGoogle, loginWithGitHub } from "../actions";
 
 export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
@@ -51,7 +51,7 @@ export default function RegisterPage() {
 
   async function handleGithubLogin() {
     setSocialLoading("github");
-    const result = await loginWithGithub();
+    const result = await loginWithGitHub();
     if (result?.error) {
       setError(result.error);
       setSocialLoading(null);

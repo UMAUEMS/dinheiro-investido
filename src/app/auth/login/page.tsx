@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { Mail, Lock, ArrowRight, Github, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { login, loginWithGoogle, loginWithGithub } from "../actions";
+import { login, loginWithGoogle, loginWithGitHub } from "../actions";
 
 function LoginForm() {
   const searchParams = useSearchParams();
@@ -38,7 +38,7 @@ function LoginForm() {
 
   async function handleGithubLogin() {
     setSocialLoading("github");
-    const result = await loginWithGithub();
+    const result = await loginWithGitHub();
     if (result?.error) {
       setError(result.error);
       setSocialLoading(null);

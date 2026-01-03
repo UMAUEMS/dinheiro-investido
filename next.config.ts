@@ -1,13 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Habilitar export estático para hospedagem compartilhada
-  output: "export",
-  trailingSlash: true,
-  
-  // Configuração de imagens para export estático
+  // Configuração de imagens
   images: {
-    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
