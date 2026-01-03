@@ -2,8 +2,7 @@
 
 import { useState, Suspense } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { Mail, Lock, ArrowRight, Loader2 } from "lucide-react";
+import { Mail, Lock, ArrowRight, Loader2, Sparkles } from "lucide-react";
 import { login } from "../actions";
 
 function LoginForm() {
@@ -26,20 +25,36 @@ function LoginForm() {
 
   return (
     <div className="min-h-screen flex">
-      {/* Left - Image */}
-      <div className="hidden lg:block lg:w-1/2 relative">
-        <Image
-          src="/images/flipbook-hero.jpg"
-          alt="Flipbook"
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#b76e79]/80 to-[#d4a5a5]/60" />
-        <div className="absolute inset-0 flex items-center justify-center p-12">
-          <div className="text-white text-center">
-            <h1 className="text-4xl font-bold mb-4">Bem-vindo de volta</h1>
-            <p className="text-white/80">Continue criando flipbooks incríveis</p>
+      {/* Left - Branding */}
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#b76e79] via-[#c4868f] to-[#d4a5a5] relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-20 left-20 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
+        <div className="absolute bottom-40 right-20 w-48 h-48 bg-white/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-white/5 rounded-full" />
+        
+        <div className="relative z-10 flex flex-col items-center justify-center w-full p-12 text-white">
+          <div className="mb-8">
+            <Sparkles className="w-16 h-16 text-white/80" />
+          </div>
+          <h1 className="text-4xl font-bold mb-4 text-center">Bem-vindo de volta!</h1>
+          <p className="text-white/80 text-center max-w-sm text-lg">
+            Continue criando flipbooks incríveis e encante seus clientes.
+          </p>
+          
+          {/* Stats */}
+          <div className="mt-12 flex gap-8">
+            <div className="text-center">
+              <div className="text-3xl font-bold">50K+</div>
+              <div className="text-white/70 text-sm">Flipbooks</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold">12K+</div>
+              <div className="text-white/70 text-sm">Usuários</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold">4.9★</div>
+              <div className="text-white/70 text-sm">Avaliação</div>
+            </div>
           </div>
         </div>
       </div>
